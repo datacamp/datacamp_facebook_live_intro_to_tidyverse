@@ -24,8 +24,7 @@ titanic %>%
 
 # Subset to get all 'Male' rows
 titanic %>% 
-  filter(Sex == "male") %>%
-  head()
+  filter(Sex == "male")
 
 # Subset to get all 'Female' rows
 titanic %>%
