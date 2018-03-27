@@ -5,7 +5,7 @@
 # Introduction to the Tidyverse: Survivors of the Titanic, the Tidy Way
 DataCamp Facebook Live Code Along Session 5: Learn how to to use tidy tools in R, such as dplyr and ggplot2, to intuitively explore &amp; analyze your data.
 
-with DataCamp's very own Hugo Bowne-Anderson. Follow him on twitter [@hugobowne](https://twitter.com/hugobowne)
+with DataCamp's very own Hugo Bowne-Anderson. Follow him on twitter [@hugobowne](https://twitter.com/hugobowne).
 
 ## Description
 
