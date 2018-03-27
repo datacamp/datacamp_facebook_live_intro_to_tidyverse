@@ -1,16 +1,31 @@
 ---
 title: "Survivors of the Titanic, the Tidy Way"
-output: html_notebook
+output:
+  html_document: default
+  html_notebook: default
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+Welcome to our [R Markdown](http://rmarkdown.rstudio.com) Notebook for our Facebook Live session on Introduction to the Tidyverse. When you execute code within the notebook, the results appear beneath the code. 
 
 You can execute chunks by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 
+The core tidyverse includes the packages that you're likely to use in everyday data analyses, such as [ggplot2](http://ggplot2.tidyverse.org/) for data visualization and [dplyr](http://dplyr.tidyverse.org/) for data wrangling. You'll focus on these two in this session. FYI, A package is essentially a set of tools for doing stuff with data. 
+
+For more on the Tidyverse, check out David Robinson's [Introduction to Tidyverse course](https://www.datacamp.com/courses/introduction-to-the-tidyverse) on DataCamp and the [Learn the Tidyverse resources](https://www.tidyverse.org/learn/)
 
 ![A Tidy Data Workflow](img/tidyverse2.png)
 
 
+```{r}
+# Install the tidyverse
+# install.packages("tidyverse")
+```
+
+Now that you've imported the tidyverse, it's time to load your data and check out some of the observations.
+
+In this code along session, you'll be exploring the [Titanic dataset](https://www.kaggle.com/c/titanic), where each observation is a person and each variable is a feature such as "Name", "Age" and "Survived" (or not).
+
+Load your data:
 
 ```{r}
 # Import the Tidyverse
@@ -21,11 +36,12 @@ library(tidyverse)
 # Import data
 titanic <- readr::read_csv("data/train.csv")
 
-# Check out the first severl rows of your dataframe
+# Check out the first several observations of your dataframe
 titanic
 
 ```
 
+To get an overview of your data, use the function "summary":
 
 
 ```{r}
@@ -33,12 +49,18 @@ titanic
 summary(titanic)
 
 ```
+
+Now do the same using a pipe, one of the handiest tools in the tidyverse:
+
 ```{r}
 # Summarize titanic using a pipe
 titanic %>%
   summary()
 
 ```
+
+Do the same after dropping observations that have missing values (hint: you can concatenate pipes):
+
 ```{r}
 # Summarize titanic after dropping na
 titanic %>%
@@ -46,20 +68,33 @@ titanic %>%
   summary()
 
 ```
+
+## Wrangle your data
+
+Now it's time to explore your data and get some initial insight into the dataset. You'll be using `dplyr` "verbs" such as `filter`, `arrange` and `mutate`, which do exactly what they say. See them in action:
+
 ```{r}
 # Wrangling your data ---------------------------
 
-# Subset to get all 'Male' rows
+# Filter to get all "Male" rows
 titanic %>% 
   filter(Sex == "male")
 
 ```
+
+**What can you see here?** Any ideas about whether men are likely to have survived or not?
+
 ```{r}
-# Subset to get all 'Female' rows
+# Filter to get all "Female" rows
 titanic %>%
   filter(Sex == "female")
 
 ```
+
+**What can you see here?** Any ideas about whether women are likely to have survived or not?
+
+It's time to arrange your observations by increasing Fare:
+
 ```{r}
 # Arrange by increasing Fare
 titanic %>%
@@ -67,6 +102,9 @@ titanic %>%
 
 ```
 
+**What can you see here?** 
+
+And now by decreasing Fare:
 
 ```{r}
 # Arrange by decreasing Fare
@@ -75,6 +113,10 @@ titanic %>%
 
 ```
 
+**What can you see here?** 
+
+Create a new variable "fam_size" as the sum of "Parch" and "SibSp":
+
 ```{r}
 # Create new column fam_size (size of family)
 titanic %>%
@@ -82,42 +124,57 @@ titanic %>%
 
 ```
 
+Create a new variable "fam_size" as the sum of "Parch" and "SibSp". Then arrange by decreasing "fam_size":
 
 ```{r}
 # Create new column fam_size (size of family)
-# Arrange by decreasing FamSize
+# Arrange by decreasing fam_size
 titanic %>%
   mutate(fam_size = Parch + SibSp) %>%
   arrange(desc(fam_size))
 
 ```
 
+Mutate the values of the "Survived" variable to strings "No" and "Yes":
 
 ```{r}
-# Turn numerical values of Survived column to 'No' & 'Yes' (new dataframe)
+# Turn numerical values of Survived column to "No"" & "Yes"" (new dataframe)
 titanic1 <- titanic %>%
   mutate(Survived = ifelse(Survived == 1, "Yes", "No"))
 
 ```
 
+## Plotting your data
+
+To plot your data using `ggplot2`, you specify three things:
+
+* Your data
+* Your aesthetics (e.g. what's on the x-axis)
+* Your layers (e.g. barplot, scatterplot)
+
+Let's do it:
 
 ```{r}
 # Plot data ---------------------------
 
 # Plot barplot of passenger Sex
-ggplot(titanic1, aes(Sex)) +
+ggplot(titanic1, aes(x = Sex)) +
   geom_bar()
 
 ```
 
+**What can you see here?** 
 
 ```{r}
 # Plot barplot of passenger Sex & stack according to Survival
-ggplot(titanic1, aes(Sex)) +
+ggplot(titanic1, aes(x = Sex)) +
   geom_bar(aes(fill = Survived))
 
 ```
 
+**What can you see here?** 
+
+Now it's time for some scatter plots:
 
 ```{r}
 # Scatter plot of Age vs Fare
@@ -126,6 +183,7 @@ ggplot(titanic, aes(x = Age, y = Fare)) +
 
 ```
 
+**What can you see here?** 
 
 ```{r}
 # Scatter plot of Age vs Fare colored by Sex
@@ -134,6 +192,9 @@ ggplot(titanic, aes(x = Age, y = Fare, color = Sex)) +
 
 ```
 
+**What can you see here?** 
+
+Faceting is a way to produce multiple plots simultaneously:
 
 ```{r}
 # Scatter plot of Age vs Fare colored by Sex faceted by Survived
@@ -143,6 +204,11 @@ ggplot(titanic1, aes(x = Age, y = Fare, color = Sex)) +
 
 ```
 
+**What can you see here?** 
+
+## Summarizing and grouping your data
+
+Use the `summarize` verb to find out the mean fare paid:
 
 ```{r}
 # Summarize data ---------------------------
@@ -153,6 +219,7 @@ titanic %>%
 
 ```
 
+Use the `summarize` verb to find out the median fare paid:
 
 ```{r}
 # Check out mean Fare
@@ -161,6 +228,7 @@ titanic %>%
 
 ```
 
+Use the `filter` and `summarize` verbs to find out the mean fare paid among men:
 
 ```{r}
 # Check out mean Fare for men
@@ -170,6 +238,7 @@ titanic %>%
 
 ```
 
+Use the `filter` and `summarize` verbs to find out the mean fare paid among women:
 
 ```{r}
 # Check out mean Fare for women
@@ -179,6 +248,7 @@ titanic %>%
 
 ```
 
+Use the `filter` and `summarize` verbs to find out the mean fare paid among women **and** how many women survived:
 
 ```{r}
 # Check out mean Fare & number of survivors for women
@@ -189,6 +259,7 @@ titanic %>%
 
 ```
 
+Use the `group_by` and `summarize` verbs to find the mean fare and number of survivors as a function of sex:
 
 ```{r}
 # Check out mean Fare & number of survivors grouped by Sex
@@ -199,8 +270,11 @@ titanic %>%
 
 ```
 
+Use the `group_by` and `summarize` verbs to find the mean fare and proportion of survivors as a function of sex:
+
+
 ```{r}
-# Check out mean Fare & number of survivors grouped by Sex
+# Check out mean Fare & proportion of survivors grouped by Sex
 titanic %>% 
   group_by(Sex) %>% 
   summarise(meanFare = mean(Fare), 
