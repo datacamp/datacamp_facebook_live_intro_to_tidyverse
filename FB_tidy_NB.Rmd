@@ -9,12 +9,17 @@ Welcome to our [R Markdown](http://rmarkdown.rstudio.com) Notebook for our Faceb
 
 You can execute chunks by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 
-The core tidyverse includes the packages that you're likely to use in everyday data analyses, such as [ggplot2](http://ggplot2.tidyverse.org/) for data visualization and [dplyr](http://dplyr.tidyverse.org/) for data wrangling. You'll focus on these two in this session. FYI, A package is essentially a set of tools for doing stuff with data. 
+The core tidyverse includes the packages that you're likely to use in everyday data analyses, such as [ggplot2](http://ggplot2.tidyverse.org/) for data visualization and [dplyr](http://dplyr.tidyverse.org/) for data wrangling. You'll focus on these two in this session.
 
-For more on the Tidyverse, check out David Robinson's [Introduction to Tidyverse course](https://www.datacamp.com/courses/introduction-to-the-tidyverse) on DataCamp and the [Learn the Tidyverse resources](https://www.tidyverse.org/learn/)
+FYI, A package is essentially a set of tools for doing stuff with data. 
+
+For more on the Tidyverse, check out David Robinson's [Introduction to Tidyverse course](https://www.datacamp.com/courses/introduction-to-the-tidyverse) on DataCamp and the [Learn the Tidyverse resources](https://www.tidyverse.org/learn/).
+
+Also check out [this week's episode of DataFramed](https://www.datacamp.com/community/podcast/data-nerd), a conversation with Mara Averick, Tidyverse dev. advocate at RStudio. 
 
 ![A Tidy Data Workflow](img/tidyverse2.png)
 
+Install the tidyverse, if you haven't already:
 
 ```{r}
 # Install the tidyverse
@@ -30,23 +35,19 @@ Load your data:
 ```{r}
 # Import the Tidyverse
 
-
-# Load data ---------------------------
-
 # Import data
-
 
 # Check out the first several observations of your dataframe
 
-
 ```
+
+What are all of these variables? See [dataset description](https://www.kaggle.com/c/titanic/data) for more details.
 
 To get an overview of your data, use the function "summary":
 
 
 ```{r}
 # Summarize titanic
-
 
 ```
 
@@ -55,7 +56,6 @@ Now do the same using a pipe, one of the handiest tools in the tidyverse:
 ```{r}
 # Summarize titanic using a pipe
 
-
 ```
 
 Do the same after dropping observations that have missing values (hint: you can concatenate pipes):
@@ -63,18 +63,30 @@ Do the same after dropping observations that have missing values (hint: you can 
 ```{r}
 # Summarize titanic after dropping na
 
-
 ```
+
+You may have noticed stylistic consistency in the code that we've written above. That's because we're adhering to a style guide. In data science *and* programming/coding in general, it's important to get accustomed to using a style guide asap. As Hadley Wickham puts it in the [tidyverse style guide](http://style.tidyverse.org/index.html),
+
+> Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.
+
+**Recap:**
+
+* You've imported your data & checked it out
+* You've learnt about the pipe operator `%>%`
+
+**Up next:**
+
+* Data wrangling with `dplyr` to `filter` your data, `arrange` it and create new features by `mutating` old ones.
+
+If you're enjoying this session, retweet or share on FB now and follow us on Twitter: [hugobowne](https://twitter.com/hugobowne) & [DataCamp](https://twitter.com/DataCamp).
+
 
 ## Wrangle your data
 
 Now it's time to explore your data and get some initial insight into the dataset. You'll be using `dplyr` "verbs" such as `filter`, `arrange` and `mutate`, which do exactly what they say. See them in action:
 
 ```{r}
-# Wrangling your data ---------------------------
-
 # Filter to get all "Male" rows
-
 
 ```
 
@@ -82,7 +94,6 @@ Now it's time to explore your data and get some initial insight into the dataset
 
 ```{r}
 # Filter to get all "Female" rows
-
 
 ```
 
@@ -93,7 +104,6 @@ It's time to arrange your observations by increasing Fare:
 ```{r}
 # Arrange by increasing Fare
 
-
 ```
 
 **What can you see here?** 
@@ -102,7 +112,6 @@ And now by decreasing Fare:
 
 ```{r}
 # Arrange by decreasing Fare
-
 
 ```
 
@@ -113,7 +122,6 @@ Create a new variable "fam_size" as the sum of "Parch" and "SibSp":
 ```{r}
 # Create new column fam_size (size of family)
 
-
 ```
 
 Create a new variable "fam_size" as the sum of "Parch" and "SibSp". Then arrange by decreasing "fam_size":
@@ -122,16 +130,28 @@ Create a new variable "fam_size" as the sum of "Parch" and "SibSp". Then arrange
 # Create new column fam_size (size of family)
 # Arrange by decreasing fam_size
 
-
 ```
 
-Mutate the values of the "Survived" variable to strings "No" and "Yes":
+Mutate the values of the "Survived" variable to strings "No" and "Yes" (and create new dataframe!):
 
 ```{r}
 # Turn numerical values of Survived column to "No"" & "Yes"" (new dataframe)
 
-
 ```
+
+**Recap:**
+
+* You've imported your data & checked it out
+* You've learnt about the pipe operator `%>%`
+* You can now use `dplyr` to wrangle your data: `filter` it, `arrange` it and create new features by `mutating` old ones.
+
+All of this and more is covered in Chapter 1 of David Robinson's [Introduction to Tidyverse course](https://www.datacamp.com/courses/introduction-to-the-tidyverse) on DataCamp.
+
+**Up next:**
+
+* You'll learn how to easily and intuitively plot your data using `ggplot2`.
+
+If you're enjoying this session, retweet or share on FB now and follow us on Twitter: [hugobowne](https://twitter.com/hugobowne) & [DataCamp](https://twitter.com/DataCamp).
 
 ## Plotting your data
 
@@ -144,8 +164,6 @@ To plot your data using `ggplot2`, you specify three things:
 Let's do it:
 
 ```{r}
-# Plot data ---------------------------
-
 # Plot barplot of passenger Sex
 
 ```
@@ -154,7 +172,6 @@ Let's do it:
 
 ```{r}
 # Plot barplot of passenger Sex & stack according to Survival
-
 
 ```
 
@@ -165,14 +182,12 @@ Now it's time for some scatter plots:
 ```{r}
 # Scatter plot of Age vs Fare
 
-
 ```
 
 **What can you see here?** 
 
 ```{r}
 # Scatter plot of Age vs Fare colored by Sex
-
 
 ```
 
@@ -183,20 +198,34 @@ Faceting is a way to produce multiple plots simultaneously:
 ```{r}
 # Scatter plot of Age vs Fare colored by Sex faceted by Survived
 
-
 ```
 
 **What can you see here?** 
+
+**Recap:**
+
+* You've imported your data & checked it out
+* You've learnt about the pipe operator `%>%`
+* You can now use `dplyr` to wrangle your data: `filter` it, `arrange` it and create new features by `mutating` old ones.
+* You've learnt how to easily and intuitively plot your data using `ggplot2`.
+
+All of this and more is covered in Chapters 1 & 2 of David Robinson's [Introduction to Tidyverse course](https://www.datacamp.com/courses/introduction-to-the-tidyverse) on DataCamp.
+
+**Up next:**
+
+* Learn how to summarise your data across many dimensions, such as "Sex".
+
+
+
+If you're enjoying this session, retweet or share on FB now and follow us on Twitter: [hugobowne](https://twitter.com/hugobowne) & [DataCamp](https://twitter.com/DataCamp).
+
 
 ## Summarizing and grouping your data
 
 Use the `summarize` verb to find out the mean fare paid:
 
 ```{r}
-# Summarize data ---------------------------
-
 # Check out mean Fare
-
 
 ```
 
@@ -205,14 +234,12 @@ Use the `summarize` verb to find out the median fare paid:
 ```{r}
 # Check out mean Fare
 
-
 ```
 
 Use the `filter` and `summarize` verbs to find out the mean fare paid among men:
 
 ```{r}
 # Check out mean Fare for men
-
 
 ```
 
@@ -221,7 +248,6 @@ Use the `filter` and `summarize` verbs to find out the mean fare paid among wome
 ```{r}
 # Check out mean Fare for women
 
-
 ```
 
 Use the `filter` and `summarize` verbs to find out the mean fare paid among women **and** how many women survived:
@@ -229,14 +255,12 @@ Use the `filter` and `summarize` verbs to find out the mean fare paid among wome
 ```{r}
 # Check out mean Fare & number of survivors for women
 
-
 ```
 
 Use the `group_by` and `summarize` verbs to find the mean fare and number of survivors as a function of sex:
 
 ```{r}
 # Check out mean Fare & number of survivors grouped by Sex
-
 
 ```
 
@@ -246,7 +270,18 @@ Use the `group_by` and `summarize` verbs to find the mean fare and proportion of
 ```{r}
 # Check out mean Fare & proportion of survivors grouped by Sex
 
-
 ```
 
+**Recap:**
+
+* You've imported your data & checked it out
+* You've learnt about the pipe operator `%>%`
+* You can now use `dplyr` to wrangle your data: `filter` it, `arrange` it and create new features by `mutating` old ones.
+* You've learnt how to easily and intuitively plot your data using `ggplot2`.
+* You've learnt how to summarise your data across many dimensions, such as "Sex".
+
+All of this and more is covered in Chapters 1 through 3 of David Robinson's [Introduction to Tidyverse course](https://www.datacamp.com/courses/introduction-to-the-tidyverse) on DataCamp. And there's even more tidyverse gold in Chapter 4.
+
+
+If you enjoyed this session, retweet or share on FB now and follow us on Twitter: [hugobowne](https://twitter.com/hugobowne) & [DataCamp](https://twitter.com/DataCamp).
 

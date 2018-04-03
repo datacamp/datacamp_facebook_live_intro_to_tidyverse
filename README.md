@@ -33,3 +33,7 @@ git clone https://github.com/datacamp/datacamp_facebook_live_intro_to_tidyverse
 ```
 
 Alternatively, you can download the zip file of the repository at the top of the main page of the repository. If you prefer not to use git or don't have experience with it, this a good option.
+
+## License
+
+The code in this repository is released under the MIT license. Read more at [the Open Source Initiative](https://opensource.org/licenses/MIT). All text remains the Intellectual Property of DataCamp. If you wish to reuse, adapt or remix, get in touch with me at hugo at datacamp com to request permission.
