@@ -21,18 +21,18 @@ Also check out [this week's episode of DataFramed](https://www.datacamp.com/comm
 
 Install the tidyverse, if you haven't already:
 
-```{r}
+```{r message = FALSE}
 # Install the tidyverse
 # install.packages("tidyverse")
 ```
 
-Now that you've imported the tidyverse, it's time to load your data and check out some of the observations.
+Now that you've installed the tidyverse, it's time to load your data and check out some of the observations.
 
 In this code along session, you'll be exploring the [Titanic dataset](https://www.kaggle.com/c/titanic), where each observation is a person and each variable is a feature such as "Name", "Age" and "Survived" (or not).
 
 Load your data:
 
-```{r}
+```{r message = FALSE, warning=FALSE}
 # Import the Tidyverse
 
 # Import data
@@ -46,21 +46,21 @@ What are all of these variables? See [dataset description](https://www.kaggle.co
 To get an overview of your data, use the function "summary":
 
 
-```{r}
+```{r message = FALSE}
 # Summarize titanic
 
 ```
 
 Now do the same using a pipe, one of the handiest tools in the tidyverse:
 
-```{r}
+```{r message = FALSE}
 # Summarize titanic using a pipe
 
 ```
 
 Do the same after dropping observations that have missing values (hint: you can concatenate pipes):
 
-```{r}
+```{r message = FALSE}
 # Summarize titanic after dropping na
 
 ```
@@ -76,23 +76,32 @@ You may have noticed stylistic consistency in the code that we've written above.
 
 **Up next:**
 
-* Data wrangling with `dplyr` to `filter` your data, `arrange` it and create new features by `mutating` old ones.
+* Data wrangling with `dplyr` to **filter** your data, **arrange** it and create new features by **mutating** old ones.
 
 If you're enjoying this session, retweet or share on FB now and follow us on Twitter: [hugobowne](https://twitter.com/hugobowne) & [DataCamp](https://twitter.com/DataCamp).
 
 
 ## Wrangle your data
 
-Now it's time to explore your data and get some initial insight into the dataset. You'll be using `dplyr` "verbs" such as `filter`, `arrange` and `mutate`, which do exactly what they say. See them in action:
+Now it's time to explore your data and get some initial insight into the dataset. You'll be using `dplyr` "verbs" such as `filter`, `arrange` and `mutate`, which do exactly what they say. 
 
-```{r}
+Let's sat that we wanted to choose a particular set of observations, say, those for which the "Sex" was 'female'. `dplyr` allows us to do intuitively and in a language that mirrors how we think and talk about data.
+
+The `filter` verb chooses only the observations that match the condition. See it in action:
+
+```{r message = FALSE}
 # Filter to get all "Male" rows
 
 ```
 
 **What can you see here?** Any ideas about whether men are likely to have survived or not?
 
-```{r}
+**Note**: 
+
+* you can read `dplyr` code like a sentence: take your data and then (`%>%`) filter it according the condition that the sex is male.
+* `filter(Sex = "male")` is a common error (I've made it); there's a cool [tidyverse error guide](http://style.tidyverse.org/error-messages.html).
+
+```{r message = FALSE}
 # Filter to get all "Female" rows
 
 ```
@@ -101,7 +110,7 @@ Now it's time to explore your data and get some initial insight into the dataset
 
 It's time to arrange your observations by increasing Fare:
 
-```{r}
+```{r message = FALSE}
 # Arrange by increasing Fare
 
 ```
@@ -110,7 +119,7 @@ It's time to arrange your observations by increasing Fare:
 
 And now by decreasing Fare:
 
-```{r}
+```{r message = FALSE}
 # Arrange by decreasing Fare
 
 ```
@@ -119,14 +128,18 @@ And now by decreasing Fare:
 
 Create a new variable "fam_size" as the sum of "Parch" and "SibSp":
 
-```{r}
+```{r message = FALSE}
 # Create new column fam_size (size of family)
 
 ```
 
+**Note:**
+
+* `mutate()` can be used to create new columns but also modify existing columns in much the same way that a mutation may from a biological perspective. It's not exactly right but a nice way to provide context for verb choice.
+
 Create a new variable "fam_size" as the sum of "Parch" and "SibSp". Then arrange by decreasing "fam_size":
 
-```{r}
+```{r message = FALSE}
 # Create new column fam_size (size of family)
 # Arrange by decreasing fam_size
 
@@ -134,8 +147,8 @@ Create a new variable "fam_size" as the sum of "Parch" and "SibSp". Then arrange
 
 Mutate the values of the "Survived" variable to strings "No" and "Yes" (and create new dataframe!):
 
-```{r}
-# Turn numerical values of Survived column to "No"" & "Yes"" (new dataframe)
+```{r message = FALSE}
+# Turn numerical values of Survived column to "No" & "Yes" (new dataframe)
 
 ```
 
@@ -161,32 +174,34 @@ To plot your data using `ggplot2`, you specify three things:
 * Your aesthetics (e.g. what's on the x-axis)
 * Your layers (e.g. barplot, scatterplot)
 
+
 Let's do it:
 
-```{r}
+```{r message = FALSE}
 # Plot barplot of passenger Sex
 
 ```
 
 **What can you see here?** 
 
-```{r}
-# Plot barplot of passenger Sex & stack according to Survival
+**Note:**
 
-```
-
-**What can you see here?** 
+*  the `aes()` function is really a way to map the `aes`thetics of the plot to the variables in the data. See [Modern Dive](http://moderndive.com/3-viz.html#grammarofgraphics) by Chester Ismay & Albert Y. Kim for more.
 
 Now it's time for some scatter plots:
 
-```{r}
+```{r message = FALSE}
 # Scatter plot of Age vs Fare
 
 ```
 
 **What can you see here?** 
 
-```{r}
+**Note:**
+
+* You can read your `ggplot2` code like a sentence, just like your `dplyr` code above: "We take the data as titanic and we map Age to the x axis and Fare to the y axis, adding points on as the layer of the plot."
+
+```{r message = FALSE}
 # Scatter plot of Age vs Fare colored by Sex
 
 ```
@@ -195,12 +210,22 @@ Now it's time for some scatter plots:
 
 Faceting is a way to produce multiple plots simultaneously:
 
-```{r}
+```{r message = FALSE}
 # Scatter plot of Age vs Fare colored by Sex faceted by Survived
 
 ```
 
 **What can you see here?** 
+
+Now let's redo our bar plot of passenger "Sex" and this time fill our bars according to "Survived":
+
+```{r message = FALSE}
+# Plot barplot of passenger Sex & fill according to Survival
+
+```
+
+**What can you see here?** 
+
 
 **Recap:**
 
@@ -224,42 +249,42 @@ If you're enjoying this session, retweet or share on FB now and follow us on Twi
 
 Use the `summarize` verb to find out the mean fare paid:
 
-```{r}
+```{r message = FALSE}
 # Check out mean Fare
 
 ```
 
 Use the `summarize` verb to find out the median fare paid:
 
-```{r}
+```{r message = FALSE}
 # Check out mean Fare
 
 ```
 
 Use the `filter` and `summarize` verbs to find out the mean fare paid among men:
 
-```{r}
+```{r message = FALSE}
 # Check out mean Fare for men
 
 ```
 
 Use the `filter` and `summarize` verbs to find out the mean fare paid among women:
 
-```{r}
+```{r message = FALSE}
 # Check out mean Fare for women
 
 ```
 
 Use the `filter` and `summarize` verbs to find out the mean fare paid among women **and** how many women survived:
 
-```{r}
+```{r message = FALSE}
 # Check out mean Fare & number of survivors for women
 
 ```
 
 Use the `group_by` and `summarize` verbs to find the mean fare and number of survivors as a function of sex:
 
-```{r}
+```{r message = FALSE}
 # Check out mean Fare & number of survivors grouped by Sex
 
 ```
@@ -267,7 +292,7 @@ Use the `group_by` and `summarize` verbs to find the mean fare and number of sur
 Use the `group_by` and `summarize` verbs to find the mean fare and proportion of survivors as a function of sex:
 
 
-```{r}
+```{r message = FALSE}
 # Check out mean Fare & proportion of survivors grouped by Sex
 
 ```
