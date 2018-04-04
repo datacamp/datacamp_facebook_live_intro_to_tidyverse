@@ -35,11 +35,13 @@ Load your data:
 
 ```{r message = FALSE, warning=FALSE}
 # Import the Tidyverse
+library(tidyverse)
 
 # Import data
+passengers <- read.csv("data/train.csv") 
 
 # Check out the first several observations of your dataframe
-
+passengers
 ```
 
 What are all of these variables? See [dataset description](https://www.kaggle.com/c/titanic/data) for more details.
@@ -49,14 +51,15 @@ To get an overview of your data, use the function "summary":
 
 ```{r message = FALSE}
 # Summarize titanic
-
+summary(passengers)
 ```
 
 Now do the same using a pipe, one of the handiest tools in the tidyverse:
 
 ```{r message = FALSE}
 # Summarize titanic using a pipe
-
+passengers %>%
+  summary()
 
 ```
 
@@ -64,7 +67,9 @@ Do the same after dropping observations that have missing values (hint: you can 
 
 ```{r message = FALSE}
 # Summarize titanic after dropping na
-
+passengers %>% 
+  drop_na() %>% 
+  summary()
 ```
 
 You may have noticed stylistic consistency in the code that we've written above. That's because we're adhering to a style guide. In data science *and* programming/coding in general, it's important to get accustomed to using a style guide asap. As Hadley Wickham puts it in the [tidyverse style guide](http://style.tidyverse.org/index.html),
@@ -93,7 +98,8 @@ The `filter` verb chooses only the observations that match the condition. See it
 
 ```{r message = FALSE}
 # Filter to get all "male" rows
-
+passengers %>% 
+  filter(Sex == "male")
 ```
 
 **What can you see here?** Any ideas about whether men are likely to have survived or not?
@@ -106,7 +112,8 @@ The `filter` verb chooses only the observations that match the condition. See it
 
 ```{r message = FALSE}
 # Filter to get all "female" rows
-
+passengers %>% 
+  filter(Sex == "female")
 ```
 
 **What can you see here?** Any ideas about whether women are likely to have survived or not?
@@ -115,7 +122,8 @@ Lets say you wanted to `arrange` your observations by increaing Fare to see if y
 
 ```{r message = FALSE}
 # Arrange by increasing Fare
-
+passengers %>% 
+  arrange(Fare)
 ```
 
 **What can you see here?** 
@@ -124,7 +132,8 @@ You can also `arrange` by decreasing Fare:
 
 ```{r message = FALSE}
 # Arrange by decreasing Fare
-
+passengers %>% 
+  arrange(desc(Fare))
 ```
 
 **What can you see here?** 
@@ -133,7 +142,8 @@ Sometimes you may wish to create new variables. We know that the variable "Parch
 
 ```{r message = FALSE}
 # Create new column FamSize (size of family)
-
+passengers %>% 
+  mutate(FamSize = Parch + SibSp)
 ```
 
 **Note:**
@@ -147,14 +157,18 @@ To test this hypothesis, create a new variable "FamSize" as the sum of "Parch" a
 ```{r message = FALSE}
 # Create new column FamSize (size of family)
 # Arrange by decreasing FamSize
-
+passengers %>% 
+  mutate(FamSize = Parch + SibSp) %>% 
+  arrange(desc(FamSize))
 ```
 
 As zeroes and ones don't often say a great deal, mutate the values of the "Survived" variable to strings "No" and "Yes" (and create new dataframe!):
 
 ```{r message = FALSE}
 # Turn numerical values of Survived column to "No" & "Yes" (new dataframe)
-
+passengers1 <- passengers %>% 
+  mutate(Survived = ifelse(Survived == 0, "No", "Yes"))
+passengers1
 ```
 
 **Recap:**
@@ -184,7 +198,8 @@ First you'll plot a barplot of Sex to see how many males and females were record
 
 ```{r message = FALSE}
 # Plot barplot of passenger Sex
-
+ggplot(passengers, aes(x = Sex)) +
+  geom_bar()
 ```
 
 **What can you see here?** 
@@ -197,7 +212,8 @@ Now it's time for some scatter plots. Is the Age of any given passenger correlat
 
 ```{r message = FALSE}
 # Scatter plot of Age vs Fare
-
+ggplot(passengers, aes(x = Age, y = Fare)) +
+  geom_point()
 ```
 
 **What can you see here?** 
@@ -211,7 +227,8 @@ Let's take the previous plot and color each point by Sex, to see any correlation
 
 ```{r message = FALSE}
 # Scatter plot of Age vs Fare colored by Sex
-
+ggplot(passengers %>% drop_na(), aes(x = Age, y = Fare, color = Sex)) +
+  geom_point()
 ```
 
 **What can you see here?** 
@@ -222,7 +239,9 @@ Faceting is a way to produce multiple plots simultaneously:
 
 ```{r message = FALSE}
 # Scatter plot of Age vs Fare colored by Sex faceted by Survived
-
+ggplot(passengers1, aes(x = Age, y = Fare, color = Sex)) +
+  geom_point() +
+  facet_grid(~Survived)
 ```
 
 **What can you see here?** 
@@ -231,7 +250,8 @@ Now let's redo our bar plot of passenger "Sex" and this time fill our bars accor
 
 ```{r message = FALSE}
 # Plot barplot of passenger Sex & fill according to Survival
-
+ggplot(passengers1, aes(x = Sex, fill = Survived)) +
+  geom_bar()
 ```
 
 **What can you see here?** 
@@ -261,20 +281,25 @@ Use the `summarise` verb to find out the mean fare paid:
 
 ```{r message = FALSE}
 # Check out mean Fare
-
+passengers %>% 
+  summarise(meanFare = mean(Fare))
 ```
 
 Use the `summarise` verb to find out the median fare paid:
 
 ```{r message = FALSE}
 # Check out mean Fare
-
+passengers %>% 
+  summarise(medianFare = median(Fare))
 ```
 
 Use the `filter` and `summarise` verbs to find out the mean fare paid among men:
 
 ```{r message = FALSE}
 # Check out mean Fare for men
+passengers %>% 
+  filter(Sex == "male") %>% 
+  summarise(meanFare = mean(Fare))
 
 ```
 
@@ -282,21 +307,27 @@ Use the `filter` and `summarise` verbs to find out the mean fare paid among wome
 
 ```{r message = FALSE}
 # Check out mean Fare for women
-
+passengers %>% 
+  filter(Sex == "female") %>% 
+  summarise(meanFare = mean(Fare))
 ```
 
 Use the `filter` and `summarise` verbs to find out the mean fare paid among women **and** how many women survived:
 
 ```{r message = FALSE}
 # Check out mean Fare & number of survivors for women
-
+passengers %>% 
+  filter(Sex == "female") %>% 
+  summarise(meanFare = mean(Fare), numSurv = sum(Survived))
 ```
 
 Use the `group_by` and `summarise` verbs to find the mean fare and number of survivors as a function of sex:
 
 ```{r message = FALSE}
 # Check out mean Fare & number of survivors grouped by Sex
-
+passengers %>% 
+  group_by(Sex) %>% 
+  summarise(meanFare = mean(Fare), numSurv = sum(Survived))
 ```
 
 Use the `group_by` and `summarise` verbs to find the mean fare and proportion of survivors as a function of sex:
@@ -304,7 +335,9 @@ Use the `group_by` and `summarise` verbs to find the mean fare and proportion of
 
 ```{r message = FALSE}
 # Check out mean Fare & proportion of survivors grouped by Sex
-
+passengers %>% 
+  group_by(Sex) %>% 
+  summarise(meanFare = mean(Fare), numSurv = sum(Survived)/n())
 ```
 
 **Recap:**
