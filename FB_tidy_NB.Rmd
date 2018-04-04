@@ -1,13 +1,14 @@
 ---
 title: "Survivors of the Titanic, the Tidy Way"
 output:
-  html_document: default
+  html_document:
+    df_print: paged
   html_notebook: default
 ---
 
 Welcome to our [R Markdown](http://rmarkdown.rstudio.com) Notebook for our Facebook Live session on Introduction to the Tidyverse. When you execute code within the notebook, the results appear beneath the code. 
 
-You can execute chunks by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+You can execute chunks by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter* or * Ctrl+Shift+Enter* on Windows. 
 
 The core tidyverse includes the packages that you're likely to use in everyday data analyses, such as [ggplot2](http://ggplot2.tidyverse.org/) for data visualization and [dplyr](http://dplyr.tidyverse.org/) for data wrangling. You'll focus on these two in this session.
 
@@ -90,7 +91,7 @@ Let's sat that we wanted to choose a particular set of observations, say, those 
 The `filter` verb chooses only the observations that match the condition. See it in action:
 
 ```{r message = FALSE}
-# Filter to get all "Male" rows
+# Filter to get all "male" rows
 
 ```
 
@@ -99,10 +100,11 @@ The `filter` verb chooses only the observations that match the condition. See it
 **Note**: 
 
 * you can read `dplyr` code like a sentence: take your data and then (`%>%`) filter it according the condition that the sex is male.
+* the above does **not** alter the original dataframe.
 * `filter(Sex = "male")` is a common error (I've made it); there's a cool [tidyverse error guide](http://style.tidyverse.org/error-messages.html).
 
 ```{r message = FALSE}
-# Filter to get all "Female" rows
+# Filter to get all "female" rows
 
 ```
 
@@ -126,10 +128,10 @@ And now by decreasing Fare:
 
 **What can you see here?** 
 
-Create a new variable "fam_size" as the sum of "Parch" and "SibSp":
+Create a new variable "FamSize" as the sum of "Parch" and "SibSp":
 
 ```{r message = FALSE}
-# Create new column fam_size (size of family)
+# Create new column FamSize (size of family)
 
 ```
 
@@ -137,11 +139,11 @@ Create a new variable "fam_size" as the sum of "Parch" and "SibSp":
 
 * `mutate()` can be used to create new columns but also modify existing columns in much the same way that a mutation may from a biological perspective. It's not exactly right but a nice way to provide context for verb choice.
 
-Create a new variable "fam_size" as the sum of "Parch" and "SibSp". Then arrange by decreasing "fam_size":
+Create a new variable "FamSize" as the sum of "Parch" and "SibSp". Then arrange by decreasing "FamSize":
 
 ```{r message = FALSE}
-# Create new column fam_size (size of family)
-# Arrange by decreasing fam_size
+# Create new column FamSize (size of family)
+# Arrange by decreasing FamSize
 
 ```
 
@@ -247,21 +249,21 @@ If you're enjoying this session, retweet or share on FB now and follow us on Twi
 
 ## Summarizing and grouping your data
 
-Use the `summarize` verb to find out the mean fare paid:
+Use the `summarise` verb to find out the mean fare paid:
 
 ```{r message = FALSE}
 # Check out mean Fare
 
 ```
 
-Use the `summarize` verb to find out the median fare paid:
+Use the `summarise` verb to find out the median fare paid:
 
 ```{r message = FALSE}
 # Check out mean Fare
 
 ```
 
-Use the `filter` and `summarize` verbs to find out the mean fare paid among men:
+Use the `filter` and `summarise` verbs to find out the mean fare paid among men:
 
 ```{r message = FALSE}
 # Check out mean Fare for men
