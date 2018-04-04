@@ -21,7 +21,7 @@ Also, if you'd like to watch and **not** code along, you'll also have a great ti
 
 1. Install R from [here](https://cloud.r-project.org/).
 2. Install RStudio from [here](http://www.rstudio.com/ide/download/).
-3. Follow Jenny Bryan's instructions [here](https://jennybc.github.io/2014-05-12-ubc/r-setup.html) to test your set-up.
+3. Follow Jenny Bryan's instructions [here](https://jennybc.github.io/2014-05-12-ubc/r-setup.html) to test your set-up (note: it is not necessary to establish communication between RStudio and Git for this session).
 4. Install all the packages in the [tidyverse](https://www.tidyverse.org/packages/) by running `install.packages("tidyverse")` in RStudio.
 
 ## Clone the repository
